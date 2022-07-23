@@ -3,6 +3,7 @@ import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_domain_driven_design/application/app/app_bloc.dart';
+import 'package:flutter_domain_driven_design/injection_dependencies/injection_dependencies.dart';
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
 import 'package:flutter_domain_driven_design/presentation/pages/auth/sign_in_form/sign_in_form_page.dart';
 import 'package:flutter_domain_driven_design/presentation/router/app_router.gr.dart';
@@ -31,9 +32,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             OutlinedButton(
-              onPressed: () {
-                context.router.navigate(const SignInFormRoute());
-              },
+              onPressed: () {},
               child: Text(s.getStarted),
             ),
             ElevatedButton(
