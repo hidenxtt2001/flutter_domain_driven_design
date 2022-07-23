@@ -24,16 +24,21 @@ class _HomePageState extends State<HomePage> {
     final s = S.of(context);
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            for (var element in S.delegate.supportedLocales) {
-              if (element != _appBloc.state.locale) {
-                _appBloc.add(AppEvent.changedLanguage(element));
-                return;
-              }
-            }
-          },
-          child: Text(s.change),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                for (var element in S.delegate.supportedLocales) {
+                  if (element != _appBloc.state.locale) {
+                    _appBloc.add(AppEvent.changedLanguage(element));
+                    return;
+                  }
+                }
+              },
+              child: Text(s.changeLanguage),
+            ),
+          ],
         ),
       ),
     );
