@@ -69,6 +69,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Get Back`
+  String get getBack {
+    return Intl.message(
+      'Get Back',
+      name: 'getBack',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

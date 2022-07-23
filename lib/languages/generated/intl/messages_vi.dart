@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Thay đổi ngôn ngữ"),
+        "getBack": MessageLookupByLibrary.simpleMessage("Quay về"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu")
       };
 }
