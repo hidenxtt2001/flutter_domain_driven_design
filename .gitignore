@@ -50,4 +50,4 @@ app.*.map.json
 /.fvm
 
 # Secrets
-/config
+# /config

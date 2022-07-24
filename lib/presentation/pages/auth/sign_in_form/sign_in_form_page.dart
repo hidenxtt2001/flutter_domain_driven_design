@@ -16,10 +16,13 @@ class _SignInFormPageState extends State<SignInFormPage> {
   Widget build(BuildContext context) {
     final s = S.of(context);
     return Scaffold(
-      appBar: AppBar(),
-      body: OutlinedButton(
-        onPressed: () {},
-        child: Text(s.getBack),
+      body: Center(
+        child: OutlinedButton(
+          onPressed: () {
+            context.router.navigateBack();
+          },
+          child: Text(s.getBack),
+        ),
       ),
     );
   }

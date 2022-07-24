@@ -32,7 +32,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.router.navigate(const SignInFormRoute());
+              },
               child: Text(s.getStarted),
             ),
             ElevatedButton(
