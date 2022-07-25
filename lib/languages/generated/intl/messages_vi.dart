@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Thay đổi ngôn ngữ"),
         "getBack": MessageLookupByLibrary.simpleMessage("Quay về"),
-        "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu")
+        "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
+        "showLoading": MessageLookupByLibrary.simpleMessage("Hiển thị vòng đợi")
       };
 }

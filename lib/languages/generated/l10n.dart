@@ -79,6 +79,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Show Loading`
+  String get showLoading {
+    return Intl.message(
+      'Show Loading',
+      name: 'showLoading',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

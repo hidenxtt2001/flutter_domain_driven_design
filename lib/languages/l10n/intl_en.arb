@@ -1,5 +1,6 @@
 {
     "changeLanguage" : "Change Language",
     "getStarted" : "Get Started",
-    "getBack" : "Get Back"
+    "getBack" : "Get Back",
+    "showLoading" : "Show Loading"
 }
