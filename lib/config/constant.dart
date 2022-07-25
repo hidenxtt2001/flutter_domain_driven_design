@@ -1,7 +1,6 @@
 class Constants {
   const Constants._();
-  static const String apiUrlDev = "apiUrlDev";
-  static const String apiUrlStage = "apiUrlStage";
-  static const String apiUrlProd = "apiUrlProd";
-  static const String appName = "appName";
+  static const String baseUrl = "BASE_URL";
+  static const String connectionTimeout = "CONNECTION_TIMEOUT";
+  static const String receiveTimeout = "RECEIVE_TIMEOUT";
 }

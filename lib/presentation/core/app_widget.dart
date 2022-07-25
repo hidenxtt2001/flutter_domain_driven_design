@@ -43,9 +43,6 @@ class _AppCommonState extends State<_AppCommon> {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: appBloc.state.mode,
-      debugShowCheckedModeBanner:
-          AppConfig.getCurrentEnvironment() == Environment.dev,
-      title: AppConfig.getAppName(),
       locale: appBloc.state.locale,
       localizationsDelegates: const [
         S.delegate,

@@ -34,6 +34,7 @@ dependencies:
   injectable:  
   get_it:  
   # Utils
+  flutter_dotenv: ^5.0.2
   freezed_annotation: ^2.1.0
   flutter_bloc: ^8.0.1
   dartz: ^0.10.1
@@ -46,6 +47,9 @@ dependencies:
   intl_utils: ^2.7.0
   flutter_localizations:
     sdk: flutter
+  # Service
+  dio: ^4.0.6
+  pretty_dio_logger: ^1.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -84,7 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - config/app_config.json
+    - envs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

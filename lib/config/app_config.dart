@@ -1,37 +1,24 @@
-import 'dart:convert';
-
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_domain_driven_design/config/constant.dart';
-import 'package:flutter_domain_driven_design/injection_dependencies/injection_dependencies.dart';
-import 'package:injectable/injectable.dart';
+import 'package:flutter_domain_driven_design/config/environment.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-abstract class AppConfig {
-  const AppConfig._();
-  static late Map<String, dynamic> _config;
-  static late String _environment;
-  static Future<void> initialize(String enviromment) async {
-    final configString = await rootBundle.loadString('config/app_config.json');
-    _environment = enviromment;
-    _config = json.decode(configString);
+class AppConfig {
+  AppConfig._internal();
+
+  static final AppConfig _instance = AppConfig._internal();
+
+  static AppConfig get instance {
+    return _instance;
   }
 
-  static String getCurrentEnvironment() {
-    return _environment;
+  Future<void> initialize() async {
+    const configPath = String.fromEnvironment(Environment.configPath);
+    const buildOption = String.fromEnvironment(Environment.buildOption);
+    await dotenv.load(fileName: configPath);
   }
 
-  static String getApiUrl() {
-    switch (_environment) {
-      case Environment.test:
-        return _config[Constants.apiUrlStage];
-      case Environment.prod:
-        return _config[Constants.apiUrlProd];
-      default:
-        return _config[Constants.apiUrlDev];
-    }
-  }
-
-  static String getAppName() {
-    return _config[Constants.appName];
-  }
+  String get baseUrl => dotenv.get(Constants.baseUrl);
+  int get connectionTimeout =>
+      int.parse(dotenv.get(Constants.connectionTimeout));
+  int get receiveTimeout => int.parse(dotenv.get(Constants.receiveTimeout));
 }

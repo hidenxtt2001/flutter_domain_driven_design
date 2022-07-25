@@ -4,11 +4,11 @@ import 'package:flutter_domain_driven_design/injection_dependencies/injection_de
 
 import 'presentation/core/app_widget.dart';
 
-Future<void> mainCommon(String environment) async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
-    AppConfig.initialize(environment),
-    configureDependencies(environment),
+    AppConfig.instance.initialize(),
+    configureDependencies(),
   ]);
   runApp(const AppWidget());
 }
