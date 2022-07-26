@@ -22,10 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Thay đổi ngôn ngữ"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "error": MessageLookupByLibrary.simpleMessage("Lỗi"),
         "getBack": MessageLookupByLibrary.simpleMessage("Quay về"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
+        "info": MessageLookupByLibrary.simpleMessage("Thông báo"),
         "ok": MessageLookupByLibrary.simpleMessage("Đồng ý"),
         "showLoading": MessageLookupByLibrary.simpleMessage("Hiển thị vòng đợi")
       };
