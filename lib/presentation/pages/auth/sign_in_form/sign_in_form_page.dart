@@ -33,7 +33,7 @@ class _SignInFormPageState extends State<SignInFormPage> {
                 context.appDialog.showLoading();
                 Future.delayed(const Duration(seconds: 5)).then((value) {
                   context.appDialog.dismissLoading();
-                  context.appDialog.showAppDialog();
+                  context.appDialog.showAppDialog(message: 'test');
                 });
               },
               child: Text(s.showLoading),

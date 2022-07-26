@@ -17,8 +17,8 @@ class AppConfig {
     await dotenv.load(fileName: configPath);
   }
 
-  String get baseUrl => dotenv.get(Constants.baseUrl);
+  String get baseUrl => dotenv.get(Constants.kBaseUrl);
   int get connectionTimeout =>
-      int.parse(dotenv.get(Constants.connectionTimeout));
-  int get receiveTimeout => int.parse(dotenv.get(Constants.receiveTimeout));
+      int.parse(dotenv.get(Constants.kConnectionTimeout));
+  int get receiveTimeout => int.parse(dotenv.get(Constants.kReceiveTimeout));
 }

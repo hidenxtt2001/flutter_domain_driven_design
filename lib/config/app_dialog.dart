@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
+import 'package:flutter_domain_driven_design/presentation/widgets/w_dialog.dart';
 import 'package:flutter_domain_driven_design/presentation/widgets/w_loading.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -29,6 +30,8 @@ class AppDialog {
 
   Future<void> showAppDialog({
     AppDialogType type = AppDialogType.info,
+    String? title,
+    required String message,
     Function? onPositive,
     Function? onNegative,
     String? positiveText,
@@ -44,15 +47,10 @@ class AppDialog {
             context: _buildContext,
             builder: (context) {
               _buildContextDialog = context;
-              return AlertDialog(
-                elevation: 0,
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(true);
-                      },
-                      child: Text(positiveText!))
-                ],
+              return WDialog(
+                dialogType: type,
+                title: title,
+                message: message,
               );
             },
           ).then((value) => _buildContextDialog = null);

@@ -7,6 +7,7 @@ import 'package:flutter_domain_driven_design/injection_dependencies/injection_de
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
 import 'package:flutter_domain_driven_design/presentation/router/app_router.gr.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:injectable/injectable.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -40,22 +41,27 @@ class _AppCommonState extends State<_AppCommon> {
   @override
   Widget build(BuildContext context) {
     final appBloc = context.watch<AppBloc>();
-    return GlobalLoaderOverlay(
-      child: MaterialApp.router(
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: appBloc.state.mode,
-        locale: appBloc.state.locale,
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        routeInformationParser: _appRouter.defaultRouteParser(),
-        routerDelegate: _appRouter.delegate(),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      builder: (context, child) {
+        return GlobalLoaderOverlay(
+          child: MaterialApp.router(
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: appBloc.state.mode,
+            locale: appBloc.state.locale,
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            routeInformationParser: _appRouter.defaultRouteParser(),
+            routerDelegate: _appRouter.delegate(),
+          ),
+        );
+      },
     );
   }
 }
