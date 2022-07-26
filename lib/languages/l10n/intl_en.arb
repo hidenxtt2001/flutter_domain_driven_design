@@ -2,5 +2,6 @@
     "changeLanguage" : "Change Language",
     "getStarted" : "Get Started",
     "getBack" : "Get Back",
-    "showLoading" : "Show Loading"
+    "showLoading" : "Show Loading",
+    "ok" : "Ok"
 }

@@ -29,10 +29,11 @@ class _SignInFormPageState extends State<SignInFormPage> {
               child: Text(s.getBack),
             ),
             OutlinedButton(
-              onPressed: () {
-                context.showLoading();
+              onPressed: () async {
+                context.appDialog.showLoading();
                 Future.delayed(const Duration(seconds: 5)).then((value) {
-                  context.dismissLoading();
+                  context.appDialog.dismissLoading();
+                  context.appDialog.showAppDialog();
                 });
               },
               child: Text(s.showLoading),

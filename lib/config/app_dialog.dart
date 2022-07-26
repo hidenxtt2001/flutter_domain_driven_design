@@ -1,9 +1,13 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
+import 'package:flutter_domain_driven_design/presentation/widgets/w_loading.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class AppDialog {
-  static BuildContext? _buildContextDialog;
   final BuildContext _buildContext;
+  static BuildContext? _buildContextDialog;
 
   AppDialog._(this._buildContext);
 
@@ -11,56 +15,87 @@ class AppDialog {
     return AppDialog._(context);
   }
 
-  void showLoading({bool isDismiss = false}) {
-    dismissLoading();
-    showDialog<bool>(
-      barrierDismissible: isDismiss,
-      context: _buildContext,
-      builder: (context) {
-        _buildContextDialog = context;
-        return WillPopScope(
-          onWillPop: () {
-            return Future.value(true);
-          },
-          child: Dialog(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                CircularProgressIndicator(),
-              ],
-            ),
-          ),
-        );
+  Future<void> showLoading({bool isDismiss = false}) {
+    return Future.delayed(
+      Duration.zero,
+      () {
+        if (_buildContext.loaderOverlay.visible) {
+          return;
+        }
+        _buildContext.loaderOverlay.show(widget: const WlLoading());
       },
-    ).then((value) {
-      if (value != true) {
-        _buildContextDialog = null;
-      }
-    });
+    );
   }
 
-  void dismissLoading() {
-    if (_buildContextDialog != null && Navigator.canPop(_buildContextDialog!)) {
-      try {
-        Navigator.pop(_buildContextDialog!, true);
-      } catch (e) {
-        if (kDebugMode) {
-          print('Dismiss Loading Error');
+  Future<void> showAppDialog({
+    AppDialogType type = AppDialogType.info,
+    Function? onPositive,
+    Function? onNegative,
+    String? positiveText,
+    String? negativeText,
+  }) async {
+    return Future.delayed(
+      Duration.zero,
+      () {
+        dimissDialog().then((value) {
+          positiveText ??= S.of(_buildContext).ok;
+          showDialog(
+            barrierDismissible: false,
+            context: _buildContext,
+            builder: (context) {
+              _buildContextDialog = context;
+              return AlertDialog(
+                elevation: 0,
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Text(positiveText!))
+                ],
+              );
+            },
+          ).then((value) => _buildContextDialog = null);
+        });
+      },
+    );
+  }
+
+  Future<void> dimissDialog() async {
+    return Future.delayed(
+      Duration.zero,
+      () {
+        if (_buildContextDialog != null &&
+            Navigator.canPop(_buildContextDialog!)) {
+          try {
+            Navigator.of(_buildContextDialog!, rootNavigator: true).pop(true);
+          } catch (e) {
+            if (kDebugMode) {
+              print('Dismiss DIalog Error');
+            }
+          }
         }
-      }
-    }
-    _buildContextDialog = null;
+        _buildContextDialog = null;
+      },
+    );
+  }
+
+  Future<void> dismissLoading() async {
+    return Future.delayed(
+      Duration.zero,
+      () {
+        _buildContext.loaderOverlay.hide();
+      },
+    );
   }
 }
 
-extension AppDialogContext on BuildContext {
-  void showLoading({bool isDismiss = false}) {
-    AppDialog.of(this).showLoading(isDismiss: isDismiss);
-  }
+enum AppDialogType {
+  error,
+  info,
+  confirm,
+}
 
-  void dismissLoading() {
-    AppDialog.of(this).dismissLoading();
-  }
+extension AppDialogContext on BuildContext {
+  AppDialog get appDialog => AppDialog.of(this);
 }

@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Change Language"),
         "getBack": MessageLookupByLibrary.simpleMessage("Get Back"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
+        "ok": MessageLookupByLibrary.simpleMessage("Ok"),
         "showLoading": MessageLookupByLibrary.simpleMessage("Show Loading")
       };
 }
