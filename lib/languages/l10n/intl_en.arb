@@ -3,5 +3,9 @@
     "getStarted" : "Get Started",
     "getBack" : "Get Back",
     "showLoading" : "Show Loading",
-    "ok" : "Ok"
+    "ok" : "Ok",
+    "cancel" : "Cancel",
+    "info" : "Info",
+    "error" : "Error",
+    "confirm" : "Confirm"
 }

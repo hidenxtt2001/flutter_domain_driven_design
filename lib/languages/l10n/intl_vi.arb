@@ -3,5 +3,9 @@
     "getStarted" : "Bắt đầu",
     "getBack"  : "Quay về",
     "showLoading" : "Hiển thị vòng đợi",
-    "ok" : "Đồng ý"
+    "ok" : "Đồng ý",
+    "cancel" : "Huỷ",
+    "info" : "Thông báo",
+    "error" : "Lỗi",
+    "confirm" : "Xác nhận"
 }
