@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_domain_driven_design/application/app/app_bloc.dart';
@@ -41,27 +42,29 @@ class _AppCommonState extends State<_AppCommon> {
   @override
   Widget build(BuildContext context) {
     final appBloc = context.watch<AppBloc>();
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      builder: (context, child) {
-        return GlobalLoaderOverlay(
-          child: MaterialApp.router(
-            theme: AppTheme.light,
-            darkTheme: AppTheme.dark,
-            themeMode: appBloc.state.mode,
-            locale: appBloc.state.locale,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            routeInformationParser: _appRouter.defaultRouteParser(),
-            routerDelegate: _appRouter.delegate(),
-          ),
-        );
-      },
+    return GlobalLoaderOverlay(
+      child: MaterialApp.router(
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: appBloc.state.mode,
+        locale: appBloc.state.locale,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        builder: (context, child) {
+          return ScreenUtilInit(
+            designSize: const Size(360, 690),
+            builder: (context, child2) =>
+                child2 ?? child ?? const EmptyRouterPage(),
+          );
+        },
+        supportedLocales: S.delegate.supportedLocales,
+        routeInformationParser: _appRouter.defaultRouteParser(),
+        routerDelegate: _appRouter.delegate(),
+      ),
     );
   }
 }

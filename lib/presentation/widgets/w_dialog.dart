@@ -47,8 +47,9 @@ class WDialog extends StatelessWidget {
                       ? s.error
                       : s.confirm,
             ),
-            5.verticalSpace,
+            8.verticalSpace,
             Center(child: Text(message)),
+            8.verticalSpace,
             Align(
               alignment: Alignment.centerRight,
               child: Row(
@@ -62,6 +63,7 @@ class WDialog extends StatelessWidget {
                       },
                       child: Text(nevText),
                     ),
+                  8.w.horizontalSpace,
                   ElevatedButton(
                     onPressed: () {
                       onPositive?.call();

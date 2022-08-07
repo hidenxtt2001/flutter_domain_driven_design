@@ -139,6 +139,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Allow`
+  String get allow {
+    return Intl.message(
+      'Allow',
+      name: 'allow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To proceede, you need to enable the permissions above`
+  String get toProceedeYouNeedToEnableThePermissionsAbove {
+    return Intl.message(
+      'To proceede, you need to enable the permissions above',
+      name: 'toProceedeYouNeedToEnableThePermissionsAbove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need permission to display notifications`
+  String get youNeedPermissionToDisplayNotifications {
+    return Intl.message(
+      'You need permission to display notifications',
+      name: 'youNeedPermissionToDisplayNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show notification`
+  String get showNotification {
+    return Intl.message(
+      'Show notification',
+      name: 'showNotification',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

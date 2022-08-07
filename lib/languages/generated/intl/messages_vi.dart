@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "allow": MessageLookupByLibrary.simpleMessage("Cho phép"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Thay đổi ngôn ngữ"),
@@ -31,6 +32,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
         "info": MessageLookupByLibrary.simpleMessage("Thông báo"),
         "ok": MessageLookupByLibrary.simpleMessage("Đồng ý"),
-        "showLoading": MessageLookupByLibrary.simpleMessage("Hiển thị vòng đợi")
+        "showLoading":
+            MessageLookupByLibrary.simpleMessage("Hiển thị vòng đợi"),
+        "showNotification":
+            MessageLookupByLibrary.simpleMessage("Hiển thị thông báo"),
+        "toProceedeYouNeedToEnableThePermissionsAbove":
+            MessageLookupByLibrary.simpleMessage(
+                "Để tiếp tục, bạn cần bật các quyền ở trên"),
+        "youNeedPermissionToDisplayNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "Bạn cần cấp quyền để hiển thị thông báo")
       };
 }

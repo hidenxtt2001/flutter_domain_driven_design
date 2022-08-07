@@ -28,33 +28,36 @@ class AppDialog {
     );
   }
 
-  Future<void> showAppDialog({
+  Future<T?> showAppDialog<T>({
     AppDialogType type = AppDialogType.info,
     String? title,
     required String message,
-    Function? onPositive,
-    Function? onNegative,
+    VoidCallback? onPositive,
+    VoidCallback? onNegative,
     String? positiveText,
     String? negativeText,
   }) async {
-    return Future.delayed(
+    positiveText ??= S.of(_buildContext).ok;
+    return Future<T?>.delayed(
       Duration.zero,
-      () {
-        dimissDialog().then((value) {
-          positiveText ??= S.of(_buildContext).ok;
-          showDialog(
-            barrierDismissible: false,
-            context: _buildContext,
-            builder: (context) {
-              _buildContextDialog = context;
-              return WDialog(
-                dialogType: type,
-                title: title,
-                message: message,
-              );
-            },
-          ).then((value) => _buildContextDialog = null);
-        });
+      () async {
+        await dimissDialog();
+        return showDialog<T>(
+          barrierDismissible: false,
+          context: _buildContext,
+          builder: (context) {
+            _buildContextDialog = context;
+            return WDialog(
+              dialogType: type,
+              title: title,
+              message: message,
+              onNegative: onNegative,
+              onPositive: onPositive,
+              positiveText: positiveText,
+              negativeText: negativeText,
+            );
+          },
+        );
       },
     );
   }
