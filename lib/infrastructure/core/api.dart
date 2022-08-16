@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_domain_driven_design/config/app_config.dart';
+import 'package:flutter_domain_driven_design/infrastructure/core/base_response.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'jwt_interceptor.dart';
@@ -42,25 +43,28 @@ abstract class Api {
     return dio;
   }
 
-  // Future<ResponseModel> get(
-  //   String endpoint, {
-  //   Map<String, dynamic>? query,
-  //   Options? options,
-  //   CancelToken? cancelToken,
-  //   ProgressCallback? onReceiveProgres,
-  // }) async {
-  //   try {
-  //     final response = await _dio.get(
-  //       AppConfig.instance.env.baseUrl + endpoint,
-  //       queryParameters: query,
-  //       options: options,
-  //       cancelToken: cancelToken,
-  //       onReceiveProgress: onReceiveProgres,
-  //     );
+  Future<BaseResponse> get(
+    String endpoint, {
+    Map<String, dynamic>? query,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgres,
+  }) async {
+    try {
+      final response = await _dio.get(
+        AppConfig.instance.baseUrl + endpoint,
+        queryParameters: query,
+        options: options,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgres,
+      );
 
-  //     return ResponseModel.fromMap(response.data);
-  //   } on Exception {
-  //     rethrow;
-  //   }
-  // }
+      return BaseResponse.fromJson(
+        response.data,
+        (p0) {},
+      );
+    } on Exception {
+      rethrow;
+    }
+  }
 }

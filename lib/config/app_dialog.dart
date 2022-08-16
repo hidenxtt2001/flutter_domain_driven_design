@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 class AppDialog {
   final BuildContext _buildContext;
-  static BuildContext? _buildContextDialog;
+  bool isShowing = false;
 
   AppDialog._(this._buildContext);
 
@@ -16,7 +17,8 @@ class AppDialog {
     return AppDialog._(context);
   }
 
-  Future<void> showLoading({bool isDismiss = false}) {
+  Future<void> showLoading({bool isDismiss = false}) async {
+    await dimissDialog();
     return Future.delayed(
       Duration.zero,
       () {
@@ -38,15 +40,15 @@ class AppDialog {
     String? negativeText,
   }) async {
     positiveText ??= S.of(_buildContext).ok;
+    await dimissDialog();
     return Future<T?>.delayed(
       Duration.zero,
       () async {
-        await dimissDialog();
+        isShowing = true;
         return showDialog<T>(
           barrierDismissible: false,
           context: _buildContext,
           builder: (context) {
-            _buildContextDialog = context;
             return WDialog(
               dialogType: type,
               title: title,
@@ -57,31 +59,34 @@ class AppDialog {
               negativeText: negativeText,
             );
           },
-        );
+        ).then((value) {
+          isShowing = false;
+          return value;
+        });
       },
     );
   }
 
   Future<void> dimissDialog() async {
+    await _dismissLoading();
     return Future.delayed(
       Duration.zero,
       () {
-        if (_buildContextDialog != null &&
-            Navigator.canPop(_buildContextDialog!)) {
+        if (Navigator.canPop(_buildContext) && isShowing) {
           try {
-            Navigator.of(_buildContextDialog!, rootNavigator: true).pop(true);
+            Navigator.of(_buildContext).pop(true);
           } catch (e) {
             if (kDebugMode) {
               print('Dismiss DIalog Error');
             }
           }
         }
-        _buildContextDialog = null;
+        isShowing = false;
       },
     );
   }
 
-  Future<void> dismissLoading() async {
+  Future<void> _dismissLoading() async {
     return Future.delayed(
       Duration.zero,
       () {

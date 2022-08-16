@@ -32,7 +32,7 @@ class _SignInFormPageState extends State<SignInFormPage> {
               onPressed: () async {
                 context.appDialog.showLoading();
                 Future.delayed(const Duration(seconds: 5)).then((value) {
-                  context.appDialog.dismissLoading();
+                  context.appDialog.dimissDialog();
                   context.appDialog.showAppDialog(message: 'test');
                 });
               },
