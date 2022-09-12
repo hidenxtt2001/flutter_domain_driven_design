@@ -1,14 +1,12 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
-import 'package:flutter_domain_driven_design/presentation/widgets/w_dialog.dart';
-import 'package:flutter_domain_driven_design/presentation/widgets/w_loading.dart';
+import 'package:flutter_domain_driven_design/modules/core/core_module.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class AppDialog {
   final BuildContext _buildContext;
-  static BuildContext? _buildContextDialog;
+  bool isShowing = false;
 
   AppDialog._(this._buildContext);
 
@@ -16,7 +14,8 @@ class AppDialog {
     return AppDialog._(context);
   }
 
-  Future<void> showLoading({bool isDismiss = false}) {
+  Future<void> showLoading({bool isDismiss = false}) async {
+    await dimissDialog();
     return Future.delayed(
       Duration.zero,
       () {
@@ -28,57 +27,63 @@ class AppDialog {
     );
   }
 
-  Future<void> showAppDialog({
+  Future<T?> showAppDialog<T>({
     AppDialogType type = AppDialogType.info,
     String? title,
     required String message,
-    Function? onPositive,
-    Function? onNegative,
+    VoidCallback? onPositive,
+    VoidCallback? onNegative,
     String? positiveText,
     String? negativeText,
   }) async {
-    return Future.delayed(
+    positiveText ??= S.of(_buildContext).ok;
+    await dimissDialog();
+    return Future<T?>.delayed(
       Duration.zero,
-      () {
-        dimissDialog().then((value) {
-          positiveText ??= S.of(_buildContext).ok;
-          showDialog(
-            barrierDismissible: false,
-            context: _buildContext,
-            builder: (context) {
-              _buildContextDialog = context;
-              return WDialog(
-                dialogType: type,
-                title: title,
-                message: message,
-              );
-            },
-          ).then((value) => _buildContextDialog = null);
+      () async {
+        isShowing = true;
+        return showDialog<T>(
+          barrierDismissible: false,
+          context: _buildContext,
+          builder: (context) {
+            return WDialog(
+              dialogType: type,
+              title: title,
+              message: message,
+              onNegative: onNegative,
+              onPositive: onPositive,
+              positiveText: positiveText,
+              negativeText: negativeText,
+            );
+          },
+        ).then((value) {
+          isShowing = false;
+          return value;
         });
       },
     );
   }
 
   Future<void> dimissDialog() async {
+    await _dismissLoading();
     return Future.delayed(
       Duration.zero,
       () {
-        if (_buildContextDialog != null &&
-            Navigator.canPop(_buildContextDialog!)) {
+        if (Navigator.canPop(_buildContext) && isShowing) {
           try {
-            Navigator.of(_buildContextDialog!, rootNavigator: true).pop(true);
+            Navigator.of(_buildContext).pop(true);
           } catch (e) {
             if (kDebugMode) {
               print('Dismiss DIalog Error');
             }
           }
         }
-        _buildContextDialog = null;
+        isShowing = false;
       },
     );
   }
 
-  Future<void> dismissLoading() async {
+  Future<void> _dismissLoading() async {
     return Future.delayed(
       Duration.zero,
       () {

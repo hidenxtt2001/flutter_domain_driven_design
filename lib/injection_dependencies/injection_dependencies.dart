@@ -1,4 +1,4 @@
-import 'package:flutter_domain_driven_design/presentation/router/app_router.gr.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 

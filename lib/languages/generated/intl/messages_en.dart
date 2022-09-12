@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "allow": MessageLookupByLibrary.simpleMessage("Allow"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change Language"),
@@ -31,6 +32,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),
-        "showLoading": MessageLookupByLibrary.simpleMessage("Show Loading")
+        "showLoading": MessageLookupByLibrary.simpleMessage("Show Loading"),
+        "showNotification":
+            MessageLookupByLibrary.simpleMessage("Show notification"),
+        "toProceedeYouNeedToEnableThePermissionsAbove":
+            MessageLookupByLibrary.simpleMessage(
+                "To proceede, you need to enable the permissions above"),
+        "youNeedPermissionToDisplayNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "You need permission to display notifications")
       };
 }
