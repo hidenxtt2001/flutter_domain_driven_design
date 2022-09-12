@@ -1,10 +1,7 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
-import 'package:flutter_domain_driven_design/presentation/widgets/w_dialog.dart';
-import 'package:flutter_domain_driven_design/presentation/widgets/w_loading.dart';
+import 'package:flutter_domain_driven_design/modules/core/core_module.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class AppDialog {

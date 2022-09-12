@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_domain_driven_design/config/app_dialog.dart';
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
+import 'package:go_router/go_router.dart';
 
 class AppNotification {
   const AppNotification._internal();
@@ -106,11 +106,11 @@ class AppNotification {
                   channelKey: channelKey, permissions: lockedPermissions)
               .then((value) {
             permissionsAllowed = value;
-            context.router.pop();
+            GoRouter.of(context).pop();
           });
         },
         onNegative: () {
-          context.router.pop();
+          context.pop();
         },
       );
     }
@@ -129,10 +129,10 @@ class AppNotification {
             type: AppDialogType.confirm,
             positiveText: s.allow,
             onNegative: () {
-              context.router.pop(false);
+              Navigator.of(context).pop();
             },
             onPositive: () async {
-              context.router.pop(await AwesomeNotifications()
+              Navigator.of(context).pop(await AwesomeNotifications()
                   .requestPermissionToSendNotifications());
             },
           ) ??
