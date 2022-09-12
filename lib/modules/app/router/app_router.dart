@@ -1,6 +1,6 @@
+import 'package:flutter_domain_driven_design/modules/core/core_module.dart';
 import 'package:flutter_domain_driven_design/modules/home/home_module.dart';
 import 'package:go_router/go_router.dart';
-import 'package:injectable/injectable.dart';
 
 abstract class AppRouter {
   static GoRouter router() {
@@ -8,6 +8,9 @@ abstract class AppRouter {
       routes: [
         HomeRoute.route(path: AppRouterPath.home),
       ],
+      errorBuilder: (context, state) {
+        return const ErrorPage();
+      },
     );
   }
 }
