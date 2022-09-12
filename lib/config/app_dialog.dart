@@ -74,7 +74,7 @@ class AppDialog {
             Navigator.of(_buildContext).pop(true);
           } catch (e) {
             if (kDebugMode) {
-              print('Dismiss DIalog Error');
+              print('Dismiss Dialog Error');
             }
           }
         }

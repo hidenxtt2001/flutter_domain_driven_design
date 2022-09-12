@@ -4,12 +4,16 @@ import 'package:flutter_domain_driven_design/config/app_config.dart';
 import 'package:flutter_domain_driven_design/config/app_theme.dart';
 import 'package:flutter_domain_driven_design/injection_dependencies/injection_dependencies.dart';
 import 'package:flutter_domain_driven_design/languages/generated/l10n.dart';
+import 'package:flutter_domain_driven_design/modules/auth/application/auth_bloc.dart';
+import 'package:flutter_domain_driven_design/modules/core/core_module.dart';
+import 'package:flutter_domain_driven_design/modules/home/home_module.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-import '../router/app_router.dart';
+import '../router/app_route.dart';
 import '../application/app_bloc.dart';
 
 class AppWidget extends StatelessWidget {
@@ -17,8 +21,15 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AppBloc>(
-      create: (context) => getIt.call<AppBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt.call<AppBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt.call<AuthBloc>(),
+        )
+      ],
       child: const _AppCommon(),
     );
   }
@@ -33,6 +44,7 @@ class _AppCommon extends StatefulWidget {
 
 class _AppCommonState extends State<_AppCommon> {
   late final AppBloc _appBloc;
+  late final AuthBloc _authBloc;
   @override
   void initState() {
     super.initState();
@@ -42,13 +54,37 @@ class _AppCommonState extends State<_AppCommon> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _appBloc = context.read<AppBloc>();
+    _authBloc = context.read<AuthBloc>();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Initial Route App
+    final appRoute = GoRouter(
+      routes: $appRoutes,
+      errorBuilder: (context, state) {
+        return const ErrorPage();
+      },
+      refreshListenable: GoRouterRefreshStream(_authBloc.stream),
+      redirect: (state) {
+        // TODO : wokring with authentication
+        final authStatus = _authBloc.state.when(
+          authenticated: () {
+            return const HomeRoute().location;
+          },
+          unAuthenticated: () {
+            return const HomeRoute().location;
+          },
+        );
+
+        return state.subloc != authStatus ? authStatus : null;
+      },
+    );
+
     return GlobalLoaderOverlay(
       child: MaterialApp.router(
         theme: AppTheme.light,
+        debugShowCheckedModeBanner: false,
         darkTheme: AppTheme.dark,
         themeMode: _appBloc.state.mode,
         locale: _appBloc.state.locale,
@@ -65,9 +101,9 @@ class _AppCommonState extends State<_AppCommon> {
           );
         },
         supportedLocales: S.delegate.supportedLocales,
-        routeInformationParser: AppRouter.router().routeInformationParser,
-        routerDelegate: AppRouter.router().routerDelegate,
-        routeInformationProvider: AppRouter.router().routeInformationProvider,
+        routeInformationParser: appRoute.routeInformationParser,
+        routerDelegate: appRoute.routerDelegate,
+        routeInformationProvider: appRoute.routeInformationProvider,
       ),
     );
   }
