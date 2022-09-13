@@ -4,7 +4,6 @@ import 'package:flutter_domain_driven_design/config/app_color.dart';
 class AppTheme {
   const AppTheme._();
   static ThemeData light = ThemeData.light().copyWith(
-    primaryColor: AppColor.kColor4,
     backgroundColor: AppColor.kColor4,
     scaffoldBackgroundColor: AppColor.kColor1,
     colorScheme: const ColorScheme.light(
