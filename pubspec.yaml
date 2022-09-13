@@ -65,6 +65,8 @@ dev_dependencies:
   # Annotation
   freezed: ^2.1.0+1
   json_serializable:
+  # Project
+  change_app_package_name:
   # Builder
   injectable_generator:  
   build_runner:  

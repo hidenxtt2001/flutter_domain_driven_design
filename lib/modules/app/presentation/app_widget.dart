@@ -57,29 +57,27 @@ class _AppCommonState extends State<_AppCommon> {
     _authBloc = context.read<AuthBloc>();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // Initial Route App
-    final appRoute = GoRouter(
+  GoRouter setUpRouter() {
+    return GoRouter(
       routes: $appRoutes,
       errorBuilder: (context, state) {
         return const ErrorPage();
       },
       refreshListenable: GoRouterRefreshStream(_authBloc.stream),
       redirect: (state) {
-        // TODO : wokring with authentication
-        final authStatus = _authBloc.state.when(
-          authenticated: () {
-            return const HomeRoute().location;
-          },
-          unAuthenticated: () {
-            return const HomeRoute().location;
-          },
-        );
-
-        return state.subloc != authStatus ? authStatus : null;
+        // Wokring with authentication
+        final loggedIn = _authBloc.state is AuthStateAuthenticated;
+        final alreadyIn = state.subloc.startsWith(const HomeRoute().location);
+        if (loggedIn && !alreadyIn) return const HomeRoute().location;
+        return null;
       },
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Initial Route App
+    final appRoute = setUpRouter();
 
     return GlobalLoaderOverlay(
       child: MaterialApp.router(

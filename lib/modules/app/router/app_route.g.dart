@@ -15,7 +15,7 @@ GoRoute get $appRoute => GoRouteData.$route(
       factory: $AppRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'home',
+          path: '/home',
           factory: $HomeRouteExtension._fromState,
         ),
       ],

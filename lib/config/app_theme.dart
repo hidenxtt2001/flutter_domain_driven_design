@@ -17,7 +17,7 @@ class AppTheme {
         elevation: 0,
         shadowColor: Colors.transparent,
         splashFactory: InkRipple.splashFactory,
-        primary: AppColor.kColor2,
+        foregroundColor: AppColor.kColor2,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -26,7 +26,7 @@ class AppTheme {
         elevation: 0,
         shadowColor: Colors.transparent,
         splashFactory: InkRipple.splashFactory,
-        primary: AppColor.kColor2,
+        foregroundColor: AppColor.kColor2,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -35,7 +35,7 @@ class AppTheme {
         elevation: 0,
         shadowColor: Colors.transparent,
         splashFactory: InkRipple.splashFactory,
-        primary: AppColor.kColor2,
+        foregroundColor: AppColor.kColor2,
       ),
     ),
   );

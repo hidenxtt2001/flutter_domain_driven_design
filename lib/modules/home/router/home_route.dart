@@ -18,5 +18,5 @@ class HomeRoute extends GoRouteData {
 }
 
 abstract class HomeRoutePath {
-  static const String root = 'home';
+  static const String root = '/home';
 }
