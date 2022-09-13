@@ -68,7 +68,7 @@ class _AppCommonState extends State<_AppCommon> {
         // Wokring with authentication
         final loggedIn = _authBloc.state is AuthStateAuthenticated;
         final alreadyIn = state.subloc.startsWith(const HomeRoute().location);
-        if (loggedIn && !alreadyIn) return const HomeRoute().location;
+        if (!loggedIn && !alreadyIn) return const HomeRoute().location;
         return null;
       },
     );
